@@ -1,17 +1,18 @@
 import React from "react";
 import { store } from "../store.js";
-import "uikit/dist/css/uikit.css";
 
 export class BirthdayCounter extends React.Component {
   constructor(props) {
     super(props);
-    this.state = store.getState();
+    this.state = {
+      counter: store.getState()
+    };
   }
 
   componentDidMount() {
     // Subscribing to the store returns a callback that unsubscribes us from the store
     this.functionToUnsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
+      this.setState({ counter: store.getState() });
     });
   }
 
@@ -25,11 +26,9 @@ export class BirthdayCounter extends React.Component {
 
   render() {
     return (
-      <div id="container">
-        <div id="counter">
-          <h1>{this.state.count}</h1>
-          <button onClick={this.handleClick}>Increment</button>
-        </div>
+      <div id="counter">
+        <h1>{this.state.counter}</h1>
+        <button onClick={this.handleClick}>Increment</button>
       </div>
     );
   }
